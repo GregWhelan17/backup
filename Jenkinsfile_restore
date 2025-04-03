@@ -1,0 +1,87 @@
+ 
+def backup_list = ""
+pipeline {
+    agent { label 'cm-linux' }
+    stages {
+        stage("Clone and checkout") {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: scm.branches,
+                    extensions: scm.extensions, 
+                    userRemoteConfigs: [[
+                        credentialsId: scm.userRemoteConfigs[0].credentialsId,
+                        name: 'origin', 
+                        refspec: '+refs/heads/*:refs/remotes/origin/*', 
+                        url: scm.userRemoteConfigs[0].url
+                    ]],
+                    doGenerateSubmoduleConfigurations: false
+                ])
+            }
+        }
+        stage('Authentication') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "service_acc_username_and_password", passwordVariable: 'password', usernameVariable: 'username')]) {
+                    script {
+                        kubectl_command = sh (
+                            script: "curl -k -u ${username}:${password} -X GET https://oidc.${IKP_SERVER}.cloud.uk.hsbc/apitoken/token/user | jq -r '.token.\"kubectl Command\"'",
+                            returnStdout: true
+                        ).trim().replaceAll('\\$TMP_CERT','TMP_CERT').replaceAll(/export TMP_CERT=\$\(mktemp\) && /,'')
+                        
+                        output = sh (
+                            script: kubectl_command,
+                            returnStdout: true
+                            ).trim()
+                        println "Output after the command is run : $output"
+                    }
+                }
+            }
+        }
+        stage('gcloud') {
+            steps {
+                withCredentials([file(credentialsId: 'hsbc-11002897-optifinops-dev', variable: 'key')]) {
+                    script {
+                        sh "gcloud auth activate-service-account --key-file=${key}"
+                        sh """
+                            gcloud config set proxy/type http_no_tunnel
+                            gcloud config set proxy/address googleapis-dev.gcp.cloud.uk.hsbc
+                            gcloud config set proxy/port 3128
+                            gcloud config set project hsbc-11002897-optifinops-dev
+                        """
+                        backup_list = sh (
+                            script: "gcloud storage ls gs://turbo_backup/",
+                            returnStdout: true
+                        ).trim()
+                        println "Output after the command is run : $backup_list"
+                        // sh "echo $backup_list"
+
+                    }
+                }
+            }
+        }
+        stage("Gather Deployment Parameters") {
+            steps {
+                timeout(time: 90, unit: 'SECONDS') {
+                    script {
+                        // Show the select input modal
+                       def INPUT_PARAMS = input message: 'Please Provide Parameters', ok: 'Next',
+                                        parameters: [choice(name: 'BACKUP_LIST', choices: backup_list, description: 'Available Docker Images')]
+                        env.BACKUP_LIST = INPUT_PARAMS
+                    }
+                }
+            }
+        }
+        stage("Use Deployment Parameters") {
+         steps {
+                script {
+                    echo "All parameters have been set as Environment Variables"
+                    echo "Selected BACKUP: ${env.BACKUP_LIST}"
+                    sh """kubectl config set-context --current --namespace=turbonomic"""
+                    sh """pwd"""
+                    sh """chmod a+x *.sh ; ./create_restore_job.sh ${env.BACKUP_LIST}"""
+                    sh """echo ********RESTORE DONE******* """
+                }
+            }
+        }
+    }
+}

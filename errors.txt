@@ -1,0 +1,277 @@
+k describe po db-backup-job-nsg9t
+Name:             db-backup-job-nsg9t
+Namespace:        turbonomic
+Priority:         0
+Service Account:  default
+Node:             uk-azs103-n007/128.179.43.7
+Start Time:       Thu, 13 Mar 2025 16:23:02 +0000
+Labels:           controller-uid=7d82ac6e-56eb-4d5b-9b5b-6d454a70cbc5
+                  job-name=db-backup-job
+Annotations:      <none>
+Status:           Pending
+IP:
+IPs:              <none>
+Controlled By:    Job/db-backup-job
+Containers:
+  db-backup-job:
+    Container ID:
+    Image:         nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/dbbkupfull:0.2
+    Image ID:
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /scripts/script.sh
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     4
+      memory:  16Gi
+    Requests:
+      cpu:        2
+      memory:     4Gi
+    Environment:  <none>
+    Mounts:
+      /pvcs/api from api (rw)
+      /pvcs/api-certs from api-certs (rw)
+      /pvcs/auth from auth (rw)
+      /pvcs/consul-data from consul-data (rw)
+      /pvcs/data-timescaledb-0 from data-timescaledb-0 (rw)
+      /pvcs/db-data from db-data (rw)
+      /pvcs/kafka-log from kafka-log (rw)
+      /pvcs/redis-data-redis-master-0 from redis-data-redis-master-0 (rw)
+      /pvcs/rsyslog-auditlogdata from rsyslog-auditlogdata (rw)
+      /pvcs/rsyslog-syslogdata from rsyslog-syslogdata (rw)
+      /pvcs/topology-processor from topology-processor (rw)
+      /pvcs/zookeeper-data from zookeeper-data (rw)
+      /scripts from script-dir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-5nzhn (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             False
+  ContainersReady   False
+  PodScheduled      True
+Volumes:
+  api:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  api
+    ReadOnly:   false
+  api-certs:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  api-certs
+    ReadOnly:   false
+  auth:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  auth
+    ReadOnly:   false
+  consul-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  consul-data
+    ReadOnly:   false
+  data-timescaledb-0:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-timescaledb-0
+    ReadOnly:   false
+  db-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  db-data
+    ReadOnly:   false
+  kafka-log:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  kafka-log
+    ReadOnly:   false
+  redis-data-redis-master-0:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  redis-data-redis-master-0
+    ReadOnly:   false
+  rsyslog-auditlogdata:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  rsyslog-auditlogdata
+    ReadOnly:   false
+  rsyslog-syslogdata:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  rsyslog-syslogdata
+    ReadOnly:   false
+  topology-processor:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  topology-processor
+    ReadOnly:   false
+  zookeeper-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  zookeeper-data
+    ReadOnly:   false
+  script-dir:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      scripts-configmap
+    Optional:  false
+  kube-api-access-5nzhn:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason                Age                From     Message
+  ----     ------                ----               ----     -------
+  Normal   Scheduled             87s                stork    Successfully assigned turbonomic/db-backup-job-nsg9t to uk-azs103-n007
+  Warning  NonOptimumScheduling  88s                stork    Unable to schedule pod using volumes [pv011 pvc-a8adcd61-aa33-47a7-b02a-9bcc8c9e16ff pvc-1e5ddda3-d451-4e45-8208-fcea302c4ceb pvc-17b35d8b-aede-4dc0-a67e-1faa12901dad] in a hyperconverged fashion.  Make sure you have enough CPU and memory resources available on these nodes: [uk-azs103-n049 uk-azs103-n066 uk-azs103-n059 uk-azs103-n047 uk-azs103-n050 uk-azs103-n039 uk-azs103-n057]
+  Warning  FailedMount           81s (x3 over 84s)  kubelet  MountVolume.SetUp failed for volume "pvc-a8adcd61-aa33-47a7-b02a-9bcc8c9e16ff" : rpc error: code = Internal desc = failed  to attach volume: Non-shared volume is already attached on another node. Non-shared volumes can only be attached on one node at a time.
+  Warning  FailedMount           80s (x4 over 86s)  kubelet  MountVolume.SetUp failed for volume "pvc-00ac2def-a010-4fa9-bc8a-45845ec419e6" : rpc error: code = Internal desc = failed  to attach volume: Non-shared volume is already attached on another node. Non-shared volumes can only be attached on one node at a time.
+  Warning  FailedMount           79s (x2 over 81s)  kubelet  MountVolume.SetUp failed for volume "pvc-17b35d8b-aede-4dc0-a67e-1faa12901dad" : rpc error: code = Internal desc = failed  to attach volume: Non-shared volume is already attached on another node. Non-shared volumes can only be attached on one node at a time.
+  Warning  FailedMount           12s (x8 over 84s)  kubelet  MountVolume.SetUp failed for volume "pv011" : mount failed: exit status 32
+Mounting command: mount
+Mounting arguments: -t nfs gbwfnas31ap-017.hc.cloud.uk.hsbc:/gbwfnas31ap_017_v/finops_turbo_timescaledb_dev_q /var/lib/kubelet/pods/6c7e96c6-dc6a-4ff0-ba76-a19ce6f3039f/volumes/kubernetes.io~nfs/pv011
+Output: mount.nfs: access denied by server while mounting gbwfnas31ap-017.hc.cloud.uk.hsbc:/gbwfnas31ap_017_v/finops_turbo_timescaledb_dev_q
+PS C:\Users\45374258> k describe po db-backup-job-nsg9t
+Name:             db-backup-job-nsg9t
+Namespace:        turbonomic
+Priority:         0
+Service Account:  default
+Node:             uk-azs103-n007/128.179.43.7
+Start Time:       Thu, 13 Mar 2025 16:23:02 +0000
+Labels:           controller-uid=7d82ac6e-56eb-4d5b-9b5b-6d454a70cbc5
+                  job-name=db-backup-job
+Annotations:      <none>
+Status:           Pending
+IP:
+IPs:              <none>
+Controlled By:    Job/db-backup-job
+Containers:
+  db-backup-job:
+    Container ID:
+    Image:         nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/dbbkupfull:0.2
+    Image ID:
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /scripts/script.sh
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     4
+      memory:  16Gi
+    Requests:
+      cpu:        2
+      memory:     4Gi
+    Environment:  <none>
+    Mounts:
+      /pvcs/api from api (rw)
+      /pvcs/api-certs from api-certs (rw)
+      /pvcs/auth from auth (rw)
+      /pvcs/consul-data from consul-data (rw)
+      /pvcs/data-timescaledb-0 from data-timescaledb-0 (rw)
+      /pvcs/db-data from db-data (rw)
+      /pvcs/kafka-log from kafka-log (rw)
+      /pvcs/redis-data-redis-master-0 from redis-data-redis-master-0 (rw)
+      /pvcs/rsyslog-auditlogdata from rsyslog-auditlogdata (rw)
+      /pvcs/rsyslog-syslogdata from rsyslog-syslogdata (rw)
+      /pvcs/topology-processor from topology-processor (rw)
+      /pvcs/zookeeper-data from zookeeper-data (rw)
+      /scripts from script-dir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-5nzhn (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             False
+  ContainersReady   False
+  PodScheduled      True
+Volumes:
+  api:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  api
+    ReadOnly:   false
+  api-certs:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  api-certs
+    ReadOnly:   false
+  auth:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  auth
+    ReadOnly:   false
+  consul-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  consul-data
+    ReadOnly:   false
+  data-timescaledb-0:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-timescaledb-0
+    ReadOnly:   false
+  db-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  db-data
+    ReadOnly:   false
+  kafka-log:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  kafka-log
+    ReadOnly:   false
+  redis-data-redis-master-0:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  redis-data-redis-master-0
+    ReadOnly:   false
+  rsyslog-auditlogdata:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  rsyslog-auditlogdata
+    ReadOnly:   false
+  rsyslog-syslogdata:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  rsyslog-syslogdata
+    ReadOnly:   false
+  topology-processor:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  topology-processor
+    ReadOnly:   false
+  zookeeper-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  zookeeper-data
+    ReadOnly:   false
+  script-dir:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      scripts-configmap
+    Optional:  false
+  kube-api-access-5nzhn:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason                Age                  From     Message
+  ----     ------                ----                 ----     -------
+  Normal   Scheduled             113s                 stork    Successfully assigned turbonomic/db-backup-job-nsg9t to uk-azs103-n007
+  Warning  NonOptimumScheduling  114s                 stork    Unable to schedule pod using volumes [pv011 pvc-a8adcd61-aa33-47a7-b02a-9bcc8c9e16ff pvc-1e5ddda3-d451-4e45-8208-fcea302c4ceb pvc-17b35d8b-aede-4dc0-a67e-1faa12901dad] in a hyperconverged fashion.  Make sure you have enough CPU and memory resources available on these nodes: [uk-azs103-n049 uk-azs103-n066 uk-azs103-n059 uk-azs103-n047 uk-azs103-n050 uk-azs103-n039 uk-azs103-n057]
+  Warning  FailedMount           107s (x3 over 110s)  kubelet  MountVolume.SetUp failed for volume "pvc-a8adcd61-aa33-47a7-b02a-9bcc8c9e16ff" : rpc error: code = Internal desc = failed  to attach volume: Non-shared volume is already attached on another node. Non-shared volumes can only be attached on one node at a time.
+  Warning  FailedMount           106s (x4 over 112s)  kubelet  MountVolume.SetUp failed for volume "pvc-00ac2def-a010-4fa9-bc8a-45845ec419e6" : rpc error: code = Internal desc = failed  to attach volume: Non-shared volume is already attached on another node. Non-shared volumes can only be attached on one node at a time.
+  Warning  FailedMount           105s (x2 over 107s)  kubelet  MountVolume.SetUp failed for volume "pvc-17b35d8b-aede-4dc0-a67e-1faa12901dad" : rpc error: code = Internal desc = failed  to attach volume: Non-shared volume is already attached on another node. Non-shared volumes can only be attached on one node at a time.
+  Warning  FailedMount           38s (x8 over 110s)   kubelet  MountVolume.SetUp failed for volume "pv011" : mount failed: exit status 32
+Mounting command: mount
+Mounting arguments: -t nfs gbwfnas31ap-017.hc.cloud.uk.hsbc:/gbwfnas31ap_017_v/finops_turbo_timescaledb_dev_q /var/lib/kubelet/pods/6c7e96c6-dc6a-4ff0-ba76-a19ce6f3039f/volumes/kubernetes.io~nfs/pv011
+Output: mount.nfs: access denied by server while mounting gbwfnas31ap-017.hc.cloud.uk.hsbc:/gbwfnas31ap_017_v/finops_turbo_timescaledb_dev_q
+PS C:\Users\45374258> k describe po db-backup-job-nsg9t
+Error from server (NotFound): pods "db-backup-job-nsg9t" not found
+PS C:\Users\45374258> k get pvc
+NAME                        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+api                         Bound    pvc-bec79b72-4c65-4852-8440-235ec9672d89   1Gi        RWO            pwx-standard   104d
+api-certs                   Bound    pvc-2f78ab61-d705-427c-9d55-82336d61b8e8   1Gi        RWO            pwx-standard   104d
+auth                        Bound    pvc-dd6e92b9-52d8-4161-b507-c7c6b7d351ff   1Gi        RWO            pwx-standard   104d
+consul-data                 Bound    pvc-00ac2def-a010-4fa9-bc8a-45845ec419e6   10Gi       RWO            pwx-standard   104d
+data-timescaledb-0          Bound    pv011                                      400Gi      RWO            pwx-standard   9d
+db-data                     Bound    pvc-b94ad4ae-7b86-41b1-8f17-23622c32bc75   500Gi      RWO            pwx-standard   104d
+kafka-log                   Bound    pvc-a8adcd61-aa33-47a7-b02a-9bcc8c9e16ff   50Gi       RWO            pwx-standard   104d
+redis-data-redis-master-0   Bound    pvc-55f8699e-e3c7-4596-9cf6-feb5690a436c   4Gi        RWO            pwx-standard   104d
+rsyslog-auditlogdata        Bound    pvc-1e5ddda3-d451-4e45-8208-fcea302c4ceb   30Gi       RWO            pwx-standard   104d
+rsyslog-syslogdata          Bound    pvc-4b4984c6-b1b9-44c1-ad38-be38716add34   30Gi       RWO            pwx-standard   104d
+topology-processor          Bound    pvc-17b35d8b-aede-4dc0-a67e-1faa12901dad   3Gi        RWO            pwx-standard   104d
+zookeeper-data              Bound    pvc-ffdc2dd7-9f12-4137-81cf-d36f8b01d4ec   3Gi        RWO            pwx-standard   104d
+PS C:\Users\45374258>

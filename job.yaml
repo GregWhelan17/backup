@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: NAME
+spec:
+  ttlSecondsAfterFinished: 90
+  template:
+    spec:
+      containers:
+      - name: NAME
+        resources:
+          limits:
+            cpu: "4"
+            memory: 16Gi
+          requests:
+            cpu: "2"
+            memory: 4Gi
+        image: nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/dbbkupfull:0.2
+        # image: nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/messedup:0.2
+        imagePullPolicy: Always
+        command: [COMMAND]
+        volumeMounts:
+        - name: script-dir
+          mountPath: /scripts
+      restartPolicy: OnFailure
+      activeDeadlineSeconds: 7200
+      volumes:
+      - name: script-dir
+        configMap:
+          name: scripts-configmap
+          defaultMode: 0500
+      imagePullSecrets:
+      # - name: dbbkupcred
+      - name: actioncred
+      restartPolicy: Never
+  backoffLimit: 4
