@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: monitor
+  namespace: turbobkup
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 90
+      template:
+        spec:
+          imagePullSecrets:
+          - name: tivolinick-pull-secret
+          containers:
+          - name: turbobkup-parent
+            image: quay.io/tivolinick/turbobkupparent:0.1
+            imagePullPolicy: Always
+            command:
+            - /scripts/test.sh
+    #        env:
+    #        - name: TURBOPASS
+    #          valueFrom:
+    #            secretKeyRef:
+    #              name: actionscriptkeys
+    #              key: turbopass
+            volumeMounts:
+            - mountPath: /kubeconfig
+              name: kubeconfig
+            # - mountPath: /config/turbocreds
+            #   name: turbocreds
+            # - mountPath: /config/monitorconfig
+            #   name: monitorconfig
+          volumes:
+          - name: kubeconfig
+            secret:
+              secretName: kube-secret
+          # - name: turbocreds
+          #   secret:
+          #     secretName: turbo-creds
+          # - name: monitorconfig
+          #   configMap:
+          #     name: monitor-config
+          restartPolicy: OnFailure

@@ -1,5 +1,2 @@
-docker build -t quay.io/tivolinick/turbomonitor:0.1 .
-docker push quay.io/tivolinick/turbomonitor:0.1
-
-
-
+docker build -t quay.io/tivolinick/turbobkupparent:0.1 .
+docker push quay.io/tivolinick/turbobkupparent:0.1
