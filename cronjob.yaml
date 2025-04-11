@@ -27,8 +27,8 @@ spec:
             volumeMounts:
             - mountPath: /kubeconfig
               name: kubeconfig
-            # - mountPath: /config/turbocreds
-            #   name: turbocreds
+            - mountPath: /config/job
+              name: job
             # - mountPath: /config/monitorconfig
             #   name: monitorconfig
           volumes:
@@ -38,7 +38,7 @@ spec:
           # - name: turbocreds
           #   secret:
           #     secretName: turbo-creds
-          # - name: monitorconfig
-          #   configMap:
-          #     name: monitor-config
+          - name: job
+            configMap:
+              name: job-yaml
           restartPolicy: OnFailure
