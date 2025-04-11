@@ -1,4 +1,4 @@
-FROM ubuntu-2404:latest
+FROM ubuntu:latest
 ENV TZ=Europe/London
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtimezone && echo $TZ > /etc/timezone
 # RUN --mount=type=secret,id=aptconf,target=/etc/apt/auth.conf \
