@@ -6,15 +6,8 @@ data:
   launch.sh: |
     #!/bin/sh
     ls -l /scripts
-    ls -l /pvcs
-    echo "========================="
-    while [ $count -lt 10 ]; do
-      echo "count: $count"
-      count=$((count+1))
-      sleep 60
-    done
     echo  /.venv/bin/python /scripts/$*
-    # /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+    /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
      echo DONE
      sleep 300
      echo REALLY DONE
