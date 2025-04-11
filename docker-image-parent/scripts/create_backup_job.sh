@@ -1,6 +1,7 @@
 
 #!/bin/bash
 
+cd $(dirname $0)
 get_wait_count(){
     minutes=$1
     period=$2
