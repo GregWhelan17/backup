@@ -50,25 +50,25 @@ kubectl apply -f dbbkup.yaml
 # make sure the pod starts and runs
 echo '=============== wait for pod to start ==============='
 count=0
-while [ "$(kubectl get pod --no-headers | grep db-backup-job | awk '/Completed|Running/ {print $0}' )" == '' -a ${count} -lt ${startPodWait} ] ; do
+while [ "$(kubectl get pod --no-headers | grep db-backup-job | awk '/Completed|Running/ {print $0}' )" = '' -a ${count} -lt ${startPodWait} ] ; do
     echo "${count}/${startPodWait}: waiting for job pod to start"
     sleep ${period}
     count=$(expr ${count} + 1)
 done
-if [ "$(kubectl get pod --no-headers | grep db-backup-job | awk '/Completed|Running/ {print $0}' )" == '' ] ; then
+if [ "$(kubectl get pod --no-headers | grep db-backup-job | awk '/Completed|Running/ {print $0}' )" = '' ] ; then
     echo 'ERROR: Job Pod failed to start correctly'
     failed=1
 else
     echo '=============== wait for pod to finish ==============='
     count=0
-    while [ "$(kubectl get pod --no-headers | grep Completed | grep db-backup-job | cut -f1 -d' ')" == '' -a ${count} -lt ${maxPodWait} ] ; do
+    while [ "$(kubectl get pod --no-headers | grep Completed | grep db-backup-job | cut -f1 -d' ')" = '' -a ${count} -lt ${maxPodWait} ] ; do
         echo "${count}/${maxPodWait}: waiting for job pod to finish"
         sleep ${period}
         count=$(expr ${count} + 1)
     done
 
     echo '=============== Logs ==============='
-    if [ "$(kubectl get pod --no-headers | grep Completed | grep db-backup-job | cut -f1 -d' ')" == '' ] ; then
+    if [ "$(kubectl get pod --no-headers | grep Completed | grep db-backup-job | cut -f1 -d' ')" = '' ] ; then
         echo 'ERROR: Pod failed to complete successfully'
         failed=1
     fi

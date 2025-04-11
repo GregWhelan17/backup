@@ -9,7 +9,7 @@ waitperiod=5
 maxwait=$(get_wait_count 10 $waitperiod) # - 10 mins
 op=$(kubectl get deployment --no-headers | cut -f1 -d' ' | grep 'operator')
 echo "OPERATOR:${op}"
-if [ "${1}" == 'down' ] ; then
+if [ "${1}" = 'down' ] ; then
     # scale down the operator first
     for dep in ${op} ; do
         # echo ${dep}
