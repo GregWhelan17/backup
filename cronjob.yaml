@@ -17,13 +17,7 @@ spec:
             image: quay.io/tivolinick/turbobkupparent:0.1
             imagePullPolicy: Always
             command:
-            - /scripts/test.sh
-    #        env:
-    #        - name: TURBOPASS
-    #          valueFrom:
-    #            secretKeyRef:
-    #              name: actionscriptkeys
-    #              key: turbopass
+            - /scripts/create_backup_job.sh
             volumeMounts:
             - mountPath: /kubeconfig
               name: kubeconfig
