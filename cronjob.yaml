@@ -4,7 +4,7 @@ metadata:
   name: turbobkup-parent
   namespace: turbobkup
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/20 * * * *"
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 90
