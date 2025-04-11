@@ -14,7 +14,7 @@ spec:
         image: quay.io/tivolinick/turbobkupparent:0.1
         imagePullPolicy: Always
         command:
-        - /scripts/create_backup_job.sh
+        - /scripts/runbkup.sh
         volumeMounts:
         - mountPath: /kubeconfig
           name: kubeconfig
