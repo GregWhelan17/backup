@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: monitor
+  name: turbobkup-parent
   namespace: turbobkup
 spec:
   schedule: "*/5 * * * *"
