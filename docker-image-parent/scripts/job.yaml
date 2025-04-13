@@ -32,6 +32,6 @@ spec:
           defaultMode: 0500
       imagePullSecrets:
       # - name: dbbkupcred
-      - name: actioncred
+      - name: tivolinick-pull-secret
       restartPolicy: Never
   backoffLimit: 4
