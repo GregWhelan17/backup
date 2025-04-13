@@ -56,6 +56,7 @@ while [ "$(kubectl get pod --no-headers | grep db-restore-job | awk '/Completed|
 done
 if [ "$(kubectl get pod --no-headers | grep db-restore-job | awk '/Completed|Running/ {print $0}' )" = '' ] ; then
     echo 'ERROR: Job Pod failed to start correctly'
+    kubectl delete -f dbrestore.yaml
     failed=1
 else
     echo '=============== wait for pod to finish ==============='
@@ -69,6 +70,7 @@ else
     echo '=============== Logs ==============='
     if [ "$(kubectl get pod --no-headers | grep Completed | grep db-restore-job | cut -f1 -d' ')" = '' ] ; then
         echo 'ERROR: Pod failed to complete successfully'
+        kubectl delete -f dbrestore.yaml
         failed=1
     fi
     kubectl logs $(kubectl get pod --no-headers | grep Completed | grep db-restore-job | cut -f1 -d' ')
@@ -79,6 +81,5 @@ fi
 
 # The job doesn't end if it didn't complete successfuly, so we delete 
 if [ "$failed" ] ; then
-    kubectl delete -f dbrestore.yaml
     exit 1
 fi
