@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: scripts-configmap
-  namespace: turbobkup
+  namespace: turbonomic
 data:
   launch.sh: |
     #!/bin/sh
