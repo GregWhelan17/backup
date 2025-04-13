@@ -15,7 +15,8 @@ spec:
           requests:
             cpu: "2"
             memory: 4Gi
-        image: nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/dbbkupfull:0.2
+        image: quay.io/tivolinick/turbobkupchild:0.1
+        # image: nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/dbbkupfull:0.2
         # image: nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/messedup:0.2
         imagePullPolicy: Always
         command: [COMMAND]
