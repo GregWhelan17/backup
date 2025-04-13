@@ -43,7 +43,7 @@ else
     # check it all comes back up......
     count=0
     while [ $(kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1' | wc -l) -gt 0 -a ${count} -lt ${maxwait} ] ; do
-        kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1''
+        kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1'
         kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1' | wc -l
         echo "${count}/${maxwait}: waiting for pods to start"
         # kubectl get pods --no-headers | awk '!/1\/1/ {print $0}'
