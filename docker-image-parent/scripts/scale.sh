@@ -7,7 +7,7 @@ get_wait_count(){
 
 waitperiod=5
 maxwait=$(get_wait_count 10 $waitperiod) # - 10 mins
-op=$(kubectl get deployment --no-headers | cut -f1 -d' ' | grep 'operator')
+op=$(kubectl get deployment -n turbonomic --no-headers | cut -f1 -d' ' | grep 'operator')
 echo "OPERATOR:${op}"
 if [ "${1}" = 'down' ] ; then
     # scale down the operator first
@@ -17,13 +17,13 @@ if [ "${1}" = 'down' ] ; then
     done
     # wait for operator to scale down before we carry on....
     count=0
-    while [ $(kubectl get po --no-headers | grep operator | wc -l) -gt 0 -a ${count} -le ${maxwait} ] ; do
+    while [ $(kubectl get po -n turbonomic --no-headers | grep operator | wc -l) -gt 0 -a ${count} -le ${maxwait} ] ; do
         echo "${count}/${maxwait}: waiting for operator pods to terminate"
         sleep ${waitperiod}
         count=$(expr ${count} + 1)
     done
     
-    for dep in $(kubectl get deployment --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
+    for dep in $(kubectl get deployment -n turbonomic --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
         # echo $dep
         kubectl scale --replicas=0 deployments/${dep}
     done    
@@ -36,17 +36,17 @@ else
         kubectl scale --replicas=1 deployments/${dep}
     done
     # TEMP scale everything back up as operator not working
-    # for dep in $(kubectl get deployment  --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
+    # for dep in $(kubectl get deployment  -n turbonomic --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
     #     # echo $dep
     #     kubectl scale --replicas=1 deployments/${dep}
     # done
     # check it all comes back up......
     count=0
-    while [ $(kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1' | wc -l) -gt 0 -a ${count} -lt ${maxwait} ] ; do
-        kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1'
-        kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1' | wc -l
+    while [ $(kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1' | wc -l) -gt 0 -a ${count} -lt ${maxwait} ] ; do
+        kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1'
+        kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1' | wc -l
         echo "${count}/${maxwait}: waiting for pods to start"
-        # kubectl get pods --no-headers | awk '!/1\/1/ {print $0}'
+        # kubectl get pods -n turbonomic --no-headers | awk '!/1\/1/ {print $0}'
         # echo '=================================================================================================='
         sleep ${waitperiod}
         count=$(expr ${count} + 1)
