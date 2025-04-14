@@ -4,10 +4,26 @@ metadata:
   name: turbo-backup-pv
 spec:
   capacity:
-    storage: 500Mi
+    storage: 500Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   vsphereVolume:
     volumePath: "[datastore-wdc06-vm01] ndf-turbo3_1/ndf-turbo3_1.vmdk"
     fsType: ext4
+  claimRef:
+    namespace: turbonomic
+    name: turbo-backup-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: turbo-backup-claim
+  namespace: turbonomic
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+
