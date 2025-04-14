@@ -31,7 +31,7 @@ for pvc in $(kubectl get pvc --no-headers -o custom-columns=":metadata.name" | g
 done
 
 while IFS= read -r line ; do
-    echo "$line" | tr -d '\015' | sed 's/NAME/db-restore-job/' | sed "s?COMMAND?\"/scripts/launch.sh\", \"restore.py\", \"$1\"?" >> dbrestore.yaml
+    echo "$line" | tr -d '\015' | sed 's/NAME/turbo-restore/' | sed "s?COMMAND?\"/scripts/launch.sh\", \"restore.py\", \"$1\"?" >> dbrestore.yaml
     # if [ "$(echo $line | grep 'volumes:')" != '' ] ; then
     #     cat volumes.yaml >> dbrestore.yaml
     # fi
