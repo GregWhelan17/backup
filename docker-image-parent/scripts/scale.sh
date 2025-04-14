@@ -13,7 +13,7 @@ if [ "${1}" = 'down' ] ; then
     # scale down the operator first
     for dep in ${op} ; do
         # echo ${dep}
-        kubectl scale --replicas=0 deployments/${dep}
+        kubectl scale --replicas=0 deployments/${dep} -n turbonomic
     done
     # wait for operator to scale down before we carry on....
     count=0
@@ -25,7 +25,7 @@ if [ "${1}" = 'down' ] ; then
     
     for dep in $(kubectl get deployment -n turbonomic --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
         # echo $dep
-        kubectl scale --replicas=0 deployments/${dep}
+        kubectl scale --replicas=0 deployments/${dep} -n turbonomic
     done    
 else
     # echo 'NOT SCALING UP FOR NOW'
@@ -33,12 +33,12 @@ else
     # Just need to scale up the operator. it takes care of everything else
     for dep in ${op} ; do
         # echo $dep
-        kubectl scale --replicas=1 deployments/${dep}
+        kubectl scale --replicas=1 deployments/${dep} -n turbonomic
     done
     # TEMP scale everything back up as operator not working
     # for dep in $(kubectl get deployment  -n turbonomic --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
     #     # echo $dep
-    #     kubectl scale --replicas=1 deployments/${dep}
+    #     kubectl scale --replicas=1 deployments/${dep} -n turbonomic
     # done
     # check it all comes back up......
     count=0
