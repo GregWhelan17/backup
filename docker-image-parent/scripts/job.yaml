@@ -23,6 +23,8 @@ spec:
         volumeMounts:
         - name: script-dir
           mountPath: /scripts
+        - mountPath: /turbo-backup
+          name: turbo-backup
       restartPolicy: OnFailure
       activeDeadlineSeconds: 7200
       volumes:
@@ -30,8 +32,14 @@ spec:
         configMap:
           name: scripts-configmap
           defaultMode: 0500
+      - name: turbo-backup
+        persistentVolumeClaim:
+          claimName: turbo-backup-claim
       imagePullSecrets:
       # - name: dbbkupcred
       - name: tivolinick-pull-secret
       restartPolicy: Never
   backoffLimit: 4
+
+
+

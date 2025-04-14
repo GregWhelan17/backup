@@ -8,6 +8,7 @@ data:
     #!/bin/sh
     ls -l /scripts
     ls -l /pvcs
+    ls -l /turbo-backup
     echo "========================="
     count=0
     while [ $count -lt 10 ]; do
