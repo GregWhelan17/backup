@@ -36,10 +36,10 @@ else
         kubectl scale --replicas=1 deployments/${dep}
     done
     # TEMP scale everything back up as operator not working
-    for dep in $(kubectl get deployment  --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
-        # echo $dep
-        kubectl scale --replicas=1 deployments/${dep}
-    done
+    # for dep in $(kubectl get deployment  --no-headers | cut -f1 -d' ' | grep -v actionscripts) ; do
+    #     # echo $dep
+    #     kubectl scale --replicas=1 deployments/${dep}
+    # done
     # check it all comes back up......
     count=0
     while [ $(kubectl get pods --no-headers | kubectl get pods -n turbonomic --no-headers | grep -Ev '([0-9]+)\/\1' | wc -l) -gt 0 -a ${count} -lt ${maxwait} ] ; do
