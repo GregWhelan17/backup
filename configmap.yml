@@ -9,6 +9,10 @@ data:
     ls -l /scripts
     ls -l /pvcs
     ls -l /turbo-backup
+    echo "=========================" 
+    echo  /.venv/bin/python /scripts/$*
+    # /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+    /.venv/bin/python /scripts/$*
     echo "========================="
     count=0
     while [ $count -lt 10 ]; do
@@ -16,12 +20,9 @@ data:
       count=$((count+1))
       sleep 60
     done
-    echo  /.venv/bin/python /scripts/$*
-    # /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
-    /.venv/bin/python /scripts/$*
      echo DONE
-     sleep 300
-     echo REALLY DONE
+    #  sleep 300
+    #  echo REALLY DONE
   backup.py: |
     from google.cloud import storage
     from datetime import datetime
