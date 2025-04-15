@@ -156,7 +156,7 @@ data:
 
     def archive_files(src_dir, backup_dir,date):
         dest_dir=f'{backup_dir}/{date}'
-        print('f DEST: {dest_dir} SRC: {src_dir}')
+        print(f'DEST: {dest_dir} SRC: {src_dir}')
         shutil.make_archive(dest_dir, 'gztar', src_dir)
     # ========================== MAIN =======================================
 
