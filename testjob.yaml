@@ -32,6 +32,6 @@ spec:
       - name: job
         configMap:
           name: job-yaml
-      restartPolicy: OnFailure
+      restartPolicy: Never
       activeDeadlineSeconds: 9000
 
