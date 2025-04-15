@@ -80,7 +80,7 @@ else
     echo '============= Logs END ============='
 
 fi
-
+exit 0
 ./scale.sh up
 
 # The job doesn't end if it didn't complete successfuly, so we delete 
