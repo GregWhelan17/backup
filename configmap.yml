@@ -9,6 +9,7 @@ data:
     ls -l /scripts
     ls -l /pvcs
     ls -l /turbo-backup
+    touch /turbo-backup/hello.txt
     echo "=========================" 
     echo  /.venv/bin/python /scripts/$*
     # /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
