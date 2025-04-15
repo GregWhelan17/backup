@@ -132,6 +132,7 @@
     bucket_name='turbo_backup'
     now=datetime.now().strftime('%Y%m%d-%H%M%S')
     print(f'START: {now}')
+    print(f'archives: {get_file_list(backup_dir)}')
 
     # upload_blob(bucket_name, '/scripts/script.sh', fr'/{now}/scripts/script.sh')
 
