@@ -25,7 +25,7 @@ fi
 
 ./scale.sh down
 
-for pvc in $(kubectl get pvc -n ${ns} --no-headers -o custom-columns=":metadata.name" | grep -v 'timescaledb'); do
+for pvc in $(kubectl get pvc -n ${ns} --no-headers -o custom-columns=":metadata.name" | grep -v 'timescaledb' | grep -v 'turbo-bkup'); do
     echo "        - mountPath: /pvcs/${pvc}
           name: ${pvc}" >> mounts.yaml
     echo "      - name: ${pvc}
