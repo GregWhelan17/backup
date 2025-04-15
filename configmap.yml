@@ -12,7 +12,7 @@ data:
     echo "=========================" 
     echo  /.venv/bin/python /scripts/$*
     # /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
-    /.venv/bin/python /scripts/$*
+    /usr/local/bin/python /scripts/$*
     echo "========================="
     count=0
     while [ $count -lt 10 ]; do
