@@ -34,7 +34,7 @@ spec:
           defaultMode: 0500
       - name: turbo-backup
         persistentVolumeClaim:
-          claimName: turbo-backup-claim
+          claimName: turbo-bkup
       imagePullSecrets:
       # - name: dbbkupcred
       - name: tivolinick-pull-secret
