@@ -18,6 +18,7 @@ data:
     done
     echo  /.venv/bin/python /scripts/$*
     # /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+    /.venv/bin/python /scripts/$*
      echo DONE
      sleep 300
      echo REALLY DONE

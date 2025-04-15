@@ -125,8 +125,6 @@
             else:
                 print("Uploaded {} to {}.".format(name, bucket.name))
 
-    def archive_files(src_dir, dest_dir):
-        shutil.make_archive(dest_dir, 'gztar', src_dir)
     # ========================== MAIN =======================================
 
     bucket_name='turbo_backup'
@@ -135,30 +133,37 @@
 
     # upload_blob(bucket_name, '/scripts/script.sh', fr'/{now}/scripts/script.sh')
 
-    # thefiles=get_file_list('/pvcs')
+    thefiles=get_file_list('/pvcs')
     # # thefiles=get_file_list('.')
 
- 
+    # print(f'=========================\n{thefiles}\n=========================')
+
+    # totalSize=0
+    # for file in thefiles:
+    #     totalSize+=os.path.getsize(file)
+    #     target=file.replace('/pvcs', now)
+    #     print(f'copy {file} bucket:{target}')
+    # size=totalSize / 1000000000
+    # print(f'Length: {len(thefiles)}, Size: {totalSize}, Size Gb: {size}')
+
+    # print(f'========================= thefiles END =========================')
     mount_dir='/pvcs'
-    backup_dir='/turbo_backup'
 
     debug=True
     # debug=False
-    # if debug:
-    #     shortlist=thefiles[10:20]
-    #     print( [re.sub(f'{mount_dir}/','',file) for file in shortlist])
-    #     upload_many_blobs_with_transfer_manager(bucket_name, [re.sub(f'{mount_dir}/','',file) for file in shortlist], source_directory=mount_dir, blob_name_prefix=f'{now}/')
-    #     print(len(shortlist))
-    # else:
-    #     print( [re.sub(f'{mount_dir}/','',file) for file in thefiles])
-    #     upload_many_blobs_with_transfer_manager(bucket_name, [re.sub(f'{mount_dir}/','',file) for file in thefiles], source_directory=mount_dir, blob_name_prefix=f'{now}/')
-    #     print(len(thefiles))
+    if debug:
+        shortlist=thefiles[10:20]
+        print( [re.sub(f'{mount_dir}/','',file) for file in shortlist])
+        upload_many_blobs_with_transfer_manager(bucket_name, [re.sub(f'{mount_dir}/','',file) for file in shortlist], source_directory=mount_dir, blob_name_prefix=f'{now}/')
+        print(len(shortlist))
+    else:
+        print( [re.sub(f'{mount_dir}/','',file) for file in thefiles])
+        upload_many_blobs_with_transfer_manager(bucket_name, [re.sub(f'{mount_dir}/','',file) for file in thefiles], source_directory=mount_dir, blob_name_prefix=f'{now}/')
+        print(len(thefiles))
 
-    # blobs=get_blobs(bucket_name,f'{now}')
-    # print(len(blobs))
-    archive_files(mount_dir, backup_dir)
-    
-    print(f'archives: {get_file_list(backup_dir)}')
-     
-    
+    blobs=get_blobs(bucket_name,f'{now}')
+    print(len(blobs))
+
+
     print(f'  END: {datetime.now().strftime('%Y%m%d-%H%M%S')}')
+
