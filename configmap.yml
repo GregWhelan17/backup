@@ -9,13 +9,15 @@ data:
     ls -l /scripts
     ls -l /pvcs
     ls -l /turbo-backup
-    touch /turbo-backup/hello.txt
+    touch /turbo-backup/hello.txt.$( date +%Y%m%d-%H%M%S )
     ls -l /turbo-backup
     echo "=========================" 
-    echo  /.venv/bin/python /scripts/$*
+    echo  /usr/bin/python3 /scripts/$*
     # /.venv/bin/python /scripts/$* -v ~/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
     /usr/bin/python3 /scripts/$*
     echo "========================="
+    ls -l /turbo-backup
+
     count=0
     while [ $count -lt 1 ]; do
       echo "count: $count"
