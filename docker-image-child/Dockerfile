@@ -6,6 +6,10 @@ RUN apt-get -y update && apt-get install -y apt-transport-https ca-certificates 
     && apt-get upgrade -y  
 
 RUN pip install --break-system-packages google-cloud-storage
+
+COPY scripts/* /scripts/
+RUN chmod +x /scripts/*
+
 COPY entrypoint.sh /entrypoint.sh
 # COPY application_default_credentials.json /root/.config/gcloud/application_default_credentials.json
 
