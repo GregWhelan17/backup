@@ -173,7 +173,7 @@ data:
 
  
     mount_dir='/pvcs'
-    backup_dir='/turbo_backup'
+    backup_dir='/turbo-backup'
     print(f'archives: {get_file_list(backup_dir)}')
 
     debug=True
