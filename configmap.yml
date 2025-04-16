@@ -197,6 +197,7 @@ data:
     import os
     import re
     import sys
+    import shutil
 
 
     def get_file_list(dir):
@@ -263,6 +264,10 @@ data:
                 print("Failed to download {} due to exception: {}".format(name, result))
             else:
                 print("Downloaded {} to {}.".format(name, destination_directory))
+    
+    def restore_files(source_dir, dest_dir,archive_name):
+        shutil.unpack_archive(f'{source_dir}/{archive_name}.tar.gz', dest_dir, 'gztar')
+
 
     # ========================== MAIN =======================================
 
@@ -270,52 +275,11 @@ data:
     now=datetime.now().strftime('%Y%m%d-%H%M%S')
     print(f'START: {now}')
     print(sys.argv[1])
-    print(sys.argv[1].split('/'))
-    print(sys.argv[1].split('/')[-1])
-    print(sys.argv[1].split('/')[-2])
-    selected=sys.argv[1].split('/')[-2]
-    print(f'SELECTED: {selected}')
+    archive_name=sys.argv[1]
+    print(f'archive_name: {archive_name}')
 
-
-    # list_all_blobs(bucket_name)
-    # # upload_blob(bucket_name, '/scripts/script.sh', fr'/{now}/scripts/script.sh')
-
-    # thefiles=get_file_list('/pvcs')
-    # # # thefiles=get_file_list('.')
-
-    # # print(f'=========================\n{thefiles}\n=========================')
-
-    # # totalSize=0
-    # # for file in thefiles:
-    # #     totalSize+=os.path.getsize(file)
-    # #     target=file.replace('/pvcs', now)
-    # #     print(f'copy {file} bucket:{target}')
-    # # size=totalSize / 1000000000
-    # # print(f'Length: {len(thefiles)}, Size: {totalSize}, Size Gb: {size}')
-
-    # # print(f'========================= thefiles END =========================')
-    mount_dir='/pvcs'
-
-    # debug=True
-    # # debug=False
-    # if debug:
-    #     shortlist=thefiles[10:20]
-    #     print( [re.sub(f'{mount_dir}/','',file) for file in shortlist])
-    #     upload_many_blobs_with_transfer_manager(bucket_name, [re.sub(f'{mount_dir}/','',file) for file in shortlist], source_directory=mount_dir, blob_name_prefix=f'/{now}/')
-    #     print(len(shortlist))
-    # else:
-    #     print( [re.sub(f'{mount_dir}/','',file) for file in thefiles])
-    #     upload_many_blobs_with_transfer_manager(bucket_name, [re.sub(f'{mount_dir}/','',file) for file in thefiles], source_directory=mount_dir, blob_name_prefix=f'/{now}/')
-    #     print(len(thefiles))
-
-    # blobs=get_blobs(bucket_name,f'{selected}/')
-
-    blobs=get_blobs(bucket_name,selected)
-    print(len(blobs))
-    download_many_blobs_with_transfer_manager(
-        bucket_name,  [re.sub(f'{selected}/','',blob) for blob in blobs], destination_directory=f"{mount_dir}/",blob_name_prefix=f'{selected}/', workers=8
-    )
-    filelist=get_file_list(mount_dir)
-    print(filelist)
+    mount_dir='/pvcs-test'
+    bkup_dir='/turbo-backup'
+    restore_files(bkup_dir, mount_dir, archive_name)
 
     print(f'  END: {datetime.now().strftime('%Y%m%d-%H%M%S')}')
