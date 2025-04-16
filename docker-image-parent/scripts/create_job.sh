@@ -18,6 +18,7 @@ echo CONFIG
 ls -lL /config
 ls -lL /config/archive
 cat /config/archive/archive
+file /config/archive/archive
 exit
 
 # check there isn't a backup running already
