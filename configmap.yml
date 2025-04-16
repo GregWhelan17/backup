@@ -18,7 +18,7 @@ data:
     ls -l /turbo-backup
     echo "========================="
     echo 'Restored'
-    ls -l /pvcs-test
+    ls -lR /pvcs-test
     # # EXTRA SLEEP FOR DEBUGGING
     # count=0
     # while [ $count -lt 5 ]; do
