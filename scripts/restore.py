@@ -81,9 +81,6 @@
     now=datetime.now().strftime('%Y%m%d-%H%M%S')
     print(f'START: {now}')
     print(sys.argv[1])
-    print(sys.argv[1].split('/'))
-    print(sys.argv[1].split('/')[-1])
-    print(sys.argv[1].split('/')[-2])
     archive_name=sys.argv[1]
     print(f'archive_name: {archive_name}')
 
