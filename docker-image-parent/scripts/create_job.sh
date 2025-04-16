@@ -30,6 +30,11 @@ echo '---------------------------------------'
 echo 'file /config/archive/archive'
 file /config/archive/archive
 echo '---------------------------------------'
+
+archive=$(cat /config/archive/archive)
+echo 'archive:'
+echo $archive
+echo '---------------------------------------'
 exit
 
 # check there isn't a backup running already
