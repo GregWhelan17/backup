@@ -20,8 +20,8 @@ spec:
           name: kubeconfig
         - mountPath: /config/job
           name: job
-        # - mountPath: /config/monitorconfig
-        #   name: monitorconfig
+        - mountPath: /archive
+          name: archive
       volumes:
       - name: kubeconfig
         secret:
@@ -32,6 +32,9 @@ spec:
       - name: job
         configMap:
           name: job-yaml
+      - name: archive
+        configMap:
+          name: archive
       restartPolicy: Never
       activeDeadlineSeconds: 9000
 
