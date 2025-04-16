@@ -20,7 +20,7 @@ spec:
           name: kubeconfig
         - mountPath: /config/job
           name: job
-        - mountPath: /archive
+        - mountPath: /config/archive
           name: archive
       volumes:
       - name: kubeconfig
