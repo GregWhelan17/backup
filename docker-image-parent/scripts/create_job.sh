@@ -15,7 +15,7 @@ maxPodWait=$(get_wait_count 130 ${period}) # - 2 hrs 10 mins
 maxJobWait=$(get_wait_count 1 ${period}) # - 1 min
 startPodWait=$(get_wait_count 10 ${period}) # - 5 min
 
-ls -lL /archive/archive
+ls -l /archive/archive
 cat /archive/archive
 exit
 
