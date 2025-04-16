@@ -21,17 +21,17 @@ spec:
         imagePullPolicy: Always
         command: [COMMAND]
         volumeMounts:
-        - name: script-dir
-          mountPath: /scripts
+        # - name: script-dir
+        #   mountPath: /scripts
         - mountPath: /turbo-backup
           name: turbo-backup
       restartPolicy: OnFailure
       activeDeadlineSeconds: 7200
       volumes:
-      - name: script-dir
-        configMap:
-          name: scripts-configmap
-          defaultMode: 0500
+      # - name: script-dir
+      #   configMap:
+      #     name: scripts-configmap
+      #     defaultMode: 0500
       - name: turbo-backup
         persistentVolumeClaim:
           claimName: turbo-bkup
