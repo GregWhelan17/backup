@@ -15,10 +15,21 @@ maxPodWait=$(get_wait_count 130 ${period}) # - 2 hrs 10 mins
 maxJobWait=$(get_wait_count 1 ${period}) # - 1 min
 startPodWait=$(get_wait_count 10 ${period}) # - 5 min
 echo CONFIG
+echo 'ls -lL /config'
 ls -lL /config
+echo '---------------------------------------'
+
+echo 'ls -lL /config/archive'
 ls -lL /config/archive
+echo '---------------------------------------'
+
+echo 'cat /config/archive/archive'
 cat /config/archive/archive
+echo '---------------------------------------'
+
+echo 'file /config/archive/archive'
 file /config/archive/archive
+echo '---------------------------------------'
 exit
 
 # check there isn't a backup running already
