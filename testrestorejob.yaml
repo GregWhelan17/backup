@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: turbobkup-parent
+  name: turborestore-parent
   namespace: turbobkup
 spec:
   ttlSecondsAfterFinished: 90
@@ -10,7 +10,7 @@ spec:
       imagePullSecrets:
       - name: tivolinick-pull-secret
       containers:
-      - name: turbobkup-parent
+      - name: turborestore-parent
         image: quay.io/tivolinick/turbobkupparent:0.1
         imagePullPolicy: Always
         command:
