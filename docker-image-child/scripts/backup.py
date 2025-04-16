@@ -2,7 +2,7 @@ from google.cloud import storage
 from datetime import datetime
 import os
 import re
-
+import shutil
 
 def get_file_list(dir):
     filelist=[]
@@ -125,7 +125,9 @@ def upload_many_blobs_with_transfer_manager(
         else:
             print("Uploaded {} to {}.".format(name, bucket.name))
 
-def archive_files(src_dir, dest_dir):
+def archive_files(src_dir, backup_dir,date):
+    dest_dir=f'{backup_dir}/{date}'
+    print(f'DEST: {dest_dir} SRC: {src_dir}')
     shutil.make_archive(dest_dir, 'gztar', src_dir)
 # ========================== MAIN =======================================
 
@@ -140,7 +142,8 @@ print(f'START: {now}')
 
 
 mount_dir='/pvcs'
-backup_dir='/turbo_backup'
+backup_dir='/turbo-backup'
+print(f'archives: {get_file_list(backup_dir)}')
 
 debug=True
 # debug=False
@@ -156,7 +159,7 @@ debug=True
 
 # blobs=get_blobs(bucket_name,f'{now}')
 # print(len(blobs))
-archive_files(mount_dir, backup_dir)
+archive_files(mount_dir, backup_dir,now)
 
 print(f'archives: {get_file_list(backup_dir)}')
     
