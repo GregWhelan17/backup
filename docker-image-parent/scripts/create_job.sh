@@ -8,34 +8,14 @@ get_wait_count(){
 
 ns=turbonomic
 direction=$1
-archive=$2
 
 period=10
 maxPodWait=$(get_wait_count 130 ${period}) # - 2 hrs 10 mins
 maxJobWait=$(get_wait_count 1 ${period}) # - 1 min
 startPodWait=$(get_wait_count 10 ${period}) # - 5 min
-echo CONFIG
-echo 'ls -lL /config'
-ls -lL /config
-echo '---------------------------------------'
-
-echo 'ls -lL /config/archive'
-ls -lL /config/archive
-echo '---------------------------------------'
-
-echo 'cat /config/archive/archive'
-cat /config/archive/archive
-echo '---------------------------------------'
-
-echo 'file /config/archive/archive'
-file /config/archive/archive
-echo '---------------------------------------'
 
 archive=$(cat /config/archive/archive)
-echo 'archive:'
-echo $archive
-echo '---------------------------------------'
-exit
+echo "archive: $archive"
 
 # check there isn't a backup running already
 if [ "$(kubectl get pod -n ${ns} --no-headers | grep turbobkup)" != '' ] ; then
@@ -59,13 +39,12 @@ done
 
 while IFS= read -r line ; do
     if [ "${direction}" = 'restore' ] ; then
-        echo "$line" | tr -d '\015' | sed 's/NAME/turbo-restore/' | sed "s?COMMAND?\"/scripts/launch.sh\", \"restore.py\", \"$archive\"?" >> dbbkup.yaml
+        echo "$line" | tr -d '\015' | sed 's/NAME/turbo-restore/' | sed "s?COMMAND?\"/scripts/launch.sh\", \"restore.py\", \"${archive}\"?" >> dbbkup.yaml
         name='turbo-restore'
     else
         echo "$line" | tr -d '\015' | sed 's/NAME/turbobkup/' | sed "s?COMMAND?\"/scripts/launch.sh\", \"backup.py\"?" >> dbbkup.yaml
         name='turbobkup'
     fi
-    # echo "$line" | tr -d '\015' | sed 's/NAME/turbobkup/' | sed "s?COMMAND?\"/scripts/launch.sh\", \"backup.py\"?" >> dbbkup.yaml
     if [ "$(echo $line | grep 'volumes:')" != '' ] ; then
         cat volumes.yaml >> dbbkup.yaml
     fi
