@@ -14,7 +14,7 @@ period=10
 maxPodWait=$(get_wait_count 130 ${period}) # - 2 hrs 10 mins
 maxJobWait=$(get_wait_count 1 ${period}) # - 1 min
 startPodWait=$(get_wait_count 10 ${period}) # - 5 min
-
+echo CONFIG
 ls -lL /config
 ls -lL /config/archive
 #cat /archive/archive
