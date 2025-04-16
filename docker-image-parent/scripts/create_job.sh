@@ -1,9 +1,5 @@
 #!/bin/bash
 
-ns=turbonomic
-direction=$1
-archive=$2
-
 get_wait_count(){
     minutes=$1
     period=$2
@@ -18,6 +14,9 @@ period=10
 maxPodWait=$(get_wait_count 130 ${period}) # - 2 hrs 10 mins
 maxJobWait=$(get_wait_count 1 ${period}) # - 1 min
 startPodWait=$(get_wait_count 10 ${period}) # - 5 min
+
+ls -l /archive
+exit
 
 # check there isn't a backup running already
 if [ "$(kubectl get pod -n ${ns} --no-headers | grep turbobkup)" != '' ] ; then

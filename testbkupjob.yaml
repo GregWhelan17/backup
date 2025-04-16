@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: turbobkup-parent
+  namespace: turbobkup
+spec:
+  ttlSecondsAfterFinished: 90
+  template:
+    spec:
+      imagePullSecrets:
+      - name: tivolinick-pull-secret
+      containers:
+      - name: turbobkup-parent
+        image: quay.io/tivolinick/turbobkupparent:0.1
+        imagePullPolicy: Always
+        command:
+        - /scripts/runbkup.sh
+        volumeMounts:
+        - mountPath: /kubeconfig
+          name: kubeconfig
+        - mountPath: /config/job
+          name: job
+        - mountPath: /archive
+          name: archive
+      volumes:
+      - name: kubeconfig
+        secret:
+          secretName: kube-secret
+      # - name: turbocreds
+      #   secret:
+      #     secretName: turbo-creds
+      - name: job
+        configMap:
+          name: job-yaml
+      - name: archive
+        configMap:
+          name: archive
+      restartPolicy: Never
+      activeDeadlineSeconds: 9000
+
