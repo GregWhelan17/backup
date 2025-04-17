@@ -51,7 +51,7 @@ while IFS= read -r line ; do
     if [ "$(echo $line | grep 'volumeMounts:')" != '' ] ; then
         cat mounts.yaml >> dbbkup.yaml
     fi
-done < job.yaml 
+done < /config/job/job.yaml 
 
 
 echo '=============== Updated YAML ==============='
