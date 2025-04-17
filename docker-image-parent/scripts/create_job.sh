@@ -69,7 +69,7 @@ while [ "$(kubectl get pod -n ${ns} --no-headers | grep ${name} | awk '/Complete
 done
 if [ "$(kubectl get pod -n ${ns} --no-headers | grep ${name} | awk '/Completed|Running/ {print $0}' )" = '' ] ; then
     echo 'ERROR: Job Pod failed to start correctly'
-    kubectl delete -f dbbkup.yaml
+    kubectl delete -f dbbkup.yaml -n ${ns}
     failed=1
 else
     echo '=============== wait for pod to finish ==============='
@@ -83,14 +83,13 @@ else
     echo '=============== Logs ==============='
     if [ "$(kubectl get pod -n ${ns} --no-headers | grep Completed | grep ${name} | cut -f1 -d' ')" = '' ] ; then
         echo 'ERROR: Pod failed to complete successfully'
-        kubectl delete -f dbbkup.yaml
+        kubectl delete -f dbbkup.yaml -n ${ns}
         failed=1
     fi
     kubectl logs $(kubectl get pod -n ${ns} --no-headers | grep Completed | grep ${name} | cut -f1 -d' ')
     echo '============= Logs END ============='
 
 fi
-exit 0
 ./scale.sh up
 
 # The job doesn't end if it didn't complete successfuly, so we delete 
