@@ -74,7 +74,34 @@ def download_many_blobs_with_transfer_manager(
 def restore_files(source_dir, dest_dir,archive_name):
     shutil.unpack_archive(f'{source_dir}/{archive_name}.tar.gz', dest_dir, 'gztar')
 
+def clear_pvcs(dir):
+    # Clear the mount directory
+    filelist=[]
+    dirlist=[]
+    for (root,dirs,files) in os.walk(dir,topdown=True,followlinks=True):
+        # print(f"Directory path: {root}, Directory Names: {dirs}, Files Names: {files}")
+        for file in files:
+            filelist.append(f'{root}/{file}')
+        for dir in dirs:
+            dirlist.append(f'{root}/{dir}')
+            
+    for file in filelist:
+        # print(file)
+        listfile=file.split('/')
+        # print(listfile)
+        # print(len(listfile))
+        if len(listfile)==4:
+            print(f'DELETE FILE: {file}')
+            os.remove(file)
 
+    for dir in dirlist:
+        # print(dir)
+        listdir=dir.split('/')
+        # print(listdir)
+        # print(len(listdir))
+        if len(listdir)==4:
+            print(f'DELETE DIR: {dir}')
+            shutil.rmtree(dir, onerror=ondelerror)
 # ========================== MAIN =======================================
 
 bucket_name='turbo_backup'
@@ -87,33 +114,9 @@ print(f'archive_name: {archive_name}')
 mount_dir='/pvcs-test'
 bkup_dir='/turbo-backup'
 restore_files(bkup_dir, mount_dir, archive_name)
+clear_pvcs(mount_dir)
 
 
-filelist=[]
-dirlist=[]
-dir='/pvcs'
-for (root,dirs,files) in os.walk(dir,topdown=True,followlinks=True):
-    # print(f"Directory path: {root}, Directory Names: {dirs}, Files Names: {files}")
-    for file in files:
-        filelist.append(f'{root}/{file}')
-    for dir in dirs:
-        dirlist.append(f'{root}/{dir}')
-        
-print("File list:")
-for file in filelist:
-    print(file)
-    listfile=file.split('/')
-    print(listfile)
-    print(len(listfile))
-    if len(listfile)==4:
-        print(f'DELETE FILE: {file}')
-print("Directory list:")
-for dir in dirlist:
-    print(dir)
-    listdir=dir.split('/')
-    print(listdir)
-    print(len(listdir))
-    if len(listdir)==4:
-        print(f'DELETE DIR: {dir}')
+
 
 print(f'  END: {datetime.now().strftime('%Y%m%d-%H%M%S')}')
