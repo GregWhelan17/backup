@@ -101,7 +101,7 @@ def clear_pvcs(dir):
         # print(len(listdir))
         if len(listdir)==4:
             print(f'DELETE DIR: {dir}')
-            shutil.rmtree(dir, onerror=ondelerror)
+            shutil.rmtree(dir)
 # ========================== MAIN =======================================
 
 bucket_name='turbo_backup'
