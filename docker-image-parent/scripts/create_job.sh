@@ -90,7 +90,7 @@ else
     echo '============= Logs END ============='
 
 fi
-# ./scale.sh up
+./scale.sh up
 
 # The job doesn't end if it didn't complete successfuly, so we delete 
 if [ "$failed" ] ; then

@@ -111,10 +111,10 @@ print(sys.argv[1])
 archive_name=sys.argv[1]
 print(f'archive_name: {archive_name}')
 
-mount_dir='/pvcs-test'
+mount_dir='/pvcs'
 bkup_dir='/turbo-backup'
-restore_files(bkup_dir, mount_dir, archive_name)
 clear_pvcs(mount_dir)
+restore_files(bkup_dir, mount_dir, archive_name)
 
 
 
