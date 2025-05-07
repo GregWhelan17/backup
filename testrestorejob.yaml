@@ -11,8 +11,8 @@ spec:
       - name: tivolinick-pull-secret
       containers:
       - name: turborestore-parent
-        image: quay.io/tivolinick/turbobkupparent:0.1
-        imagePullPolicy: Always
+        image: turbobkupparent:0.1
+        imagePullPolicy: Never
         command:
         - /scripts/runrestore.sh
         volumeMounts:

@@ -1,1 +1,0 @@
-kubectl exec -it $(kubectl get po | grep turbobkup | cut -f1 -d' ') -- /bin/bash

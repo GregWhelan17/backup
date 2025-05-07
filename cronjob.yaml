@@ -14,8 +14,8 @@ spec:
           - name: tivolinick-pull-secret
           containers:
           - name: turbobkup-parent
-            image: quay.io/tivolinick/turbobkupparent:0.1
-            imagePullPolicy: Always
+            image: turbobkupparent:0.1
+            imagePullPolicy: Never
             command:
             - /scripts/create_backup_job.sh
             volumeMounts:

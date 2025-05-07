@@ -15,28 +15,19 @@ spec:
           requests:
             cpu: "2"
             memory: 4Gi
-        image: quay.io/tivolinick/turbobkupchild:0.1
-        # image: nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/dbbkupfull:0.2
-        # image: nexus3.systems.uk.hsbc:18080/hsbc-12437542-cpopen-turbonomic/messedup:0.2
-        imagePullPolicy: Always
+        image: turbobkupchild:0.1
+        imagePullPolicy: Never
         command: [COMMAND]
         volumeMounts:
-        # - name: script-dir
-        #   mountPath: /scripts
         - mountPath: /turbo-backup
           name: turbo-backup
       restartPolicy: OnFailure
       activeDeadlineSeconds: 7200
       volumes:
-      # - name: script-dir
-      #   configMap:
-      #     name: scripts-configmap
-      #     defaultMode: 0500
       - name: turbo-backup
         persistentVolumeClaim:
           claimName: turbo-bkup
       imagePullSecrets:
-      # - name: dbbkupcred
       - name: tivolinick-pull-secret
       restartPolicy: Never
   backoffLimit: 4
