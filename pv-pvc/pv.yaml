@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-turbo-bkup
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 200Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: turbo-bkup
+    namespace: turbonomic
+  local:
+    path: /bkup/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - turbo3.cluster.local
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: turbo-bkup
+  namespace: turbonomic
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi
+  storageClassName: turbo-local-storage
+  volumeMode: Filesystem
+  volumeName: local-pv-turbo-bkup
+
